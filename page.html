@@ -1,0 +1,51 @@
+<html><body>
+  <div id="mapdiv"></div>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
+
+  <script type="text/javascript" src="test.json"></script>
+
+  <script>
+map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+
+
+    const fs = require('fs');
+
+let rawdata = fs.readFileSync('test.json');
+let points = JSON.parse(rawdata);
+
+// for (var i = 0; i < points.length; i++) {
+//     var c = points[i];
+//     var lonLat1 = new OpenLayers.LonLat(parseFloat(c.x), parseFloat(c.y))
+//           .transform(
+//             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+//             map.getProjectionObject() // to Spherical Mercator Projection
+//           );
+//           var markers = new OpenLayers.Layer.Markers( "Markers" );
+//     map.addLayer(markers);
+    
+//     markers.addMarker(new OpenLayers.Marker(lonLat1));
+    
+          
+// }71.372629 , 51.126335   parseFloat(points[0].x), parseFloat(points[0].y)
+
+    var lonLat = new OpenLayers.LonLat(71.372629 , 51.126335 )
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+          
+    var zoom=16;
+
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    
+    markers.addMarker(new OpenLayers.Marker(lonLat));
+    
+    map.setCenter (lonLat, zoom);
+
+
+  </script>
+ 
+</body></html>
